@@ -29,7 +29,7 @@ export function middleware(request: NextRequest) {
 // Configure which routes to run middleware on
 export const config = {
   matcher: [
-    '/dashboard/:path*',
+    // '/dashboard/:path*',
     '/login',
     '/signup',
   ],
