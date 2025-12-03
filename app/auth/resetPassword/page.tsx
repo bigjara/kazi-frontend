@@ -167,8 +167,8 @@ export default function PasswordResetFlow(): JSX.Element {
                 </div>
 
                 {/* Title */}
-                <h1 className="text-3xl font-bold text-center mb-3">
-                  Reset Password
+                <h1 className="text-3xl font-bold text-center mb-3 text-black">
+                  Enter Your Email
                 </h1>
 
                 {/* Subtitle */}
@@ -189,7 +189,7 @@ export default function PasswordResetFlow(): JSX.Element {
                     onKeyPress={handleKeyPress}
                     placeholder="Enter your email"
                     disabled={isLoading}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    className="w-full text-black px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
                     aria-label="Email address"
                     aria-invalid={error ? 'true' : 'false'}
                     aria-describedby={error ? 'email-error' : undefined}
@@ -216,12 +216,12 @@ export default function PasswordResetFlow(): JSX.Element {
                 </button>
 
                 {/* Resend Link */}
-                <div className="text-center mt-6">
+                {/* <div className="text-center mt-6">
                   <button className="text-gray-600 hover:text-gray-900 text-sm">
                     Didn&apos;t see the link?{' '}
                     <span className="text-blue-600 font-medium">Resend Link</span>
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
