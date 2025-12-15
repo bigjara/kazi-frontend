@@ -8,8 +8,8 @@ export default function AccountSuccess() {
   const router = useRouter();
 
   const handleGetStarted = () => {
-    // Navigate to dashboard or login page
-    router.push('/dashboard'); // or '/login' depending on your flow
+    // Navigate to dashboard
+    router.push('/dashboard'); 
   };
 
   return (
