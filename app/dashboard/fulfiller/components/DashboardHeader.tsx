@@ -1,9 +1,9 @@
-import { UserProfile } from '@/types/delivery';
+import { DeliveryUserProfile } from '@/types/delivery';
 
 interface DashboardHeaderProps {
+  userProfile: DeliveryUserProfile | null;
   unreadCount: number;
   onNotificationClick: () => void;
-  userProfile: UserProfile | null;
 }
 
 export default function DashboardHeader({ 

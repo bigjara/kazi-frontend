@@ -1,3 +1,8 @@
+import { BaseUserProfile } from './user';
+
+export interface DeliveryUserProfile extends BaseUserProfile {
+  totalDeliveries: number;
+}
 export type DeliveryStatus = 'pending' | 'active' | 'completed';
 
 export interface DeliveryLocation {
@@ -7,6 +12,7 @@ export interface DeliveryLocation {
     lng: number;
   };
 }
+
 
 export interface Delivery {
   id: string;
@@ -38,23 +44,7 @@ export interface DashboardStats {
   avgDeliveryTime: number | null; // in minutes
 }
 
-export interface UserProfile {
-  id: string;
-  name: string;
-  role: string;
-  location: string;
-  phone: string;
-  joinedDate: Date;
-  rating: number;
-  totalDeliveries: number;
-  avatar?: string;
-}
+export type UserProfile = DeliveryUserProfile;
+
 
 export type DeliveryFilter = 'all' | 'available' | 'active' | 'completed';
-
-
-export enum DeliveryFilter {
-  Pending = 'pending',
-  Active = 'active',
-  Completed = 'completed',
-}

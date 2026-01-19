@@ -5,6 +5,7 @@ import { KYCProvider } from '@/contexts/KycContext';
 import { NotificationProvider } from '@/contexts/NotificationContext';
 import { OnboardingProvider } from "@/contexts/OnboardingContext";
 import { DeliveryProvider } from "@/contexts/DeliveryContext";
+import { CreatorTasksProvider } from "@/contexts/CreatorTasksContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,9 +42,11 @@ export default function RootLayout({
         <OnboardingProvider>
         <KYCProvider>
         <NotificationProvider>
+          <CreatorTasksProvider>
           <DeliveryProvider>
           {children}
           </DeliveryProvider>
+          </CreatorTasksProvider>
         </NotificationProvider>
         </KYCProvider>
         </OnboardingProvider>

@@ -1,31 +1,35 @@
 'use client';
 
-import { useKYC } from '@/contexts/KycContext';
+import { useEffect, useState } from 'react';
 import { useNotifications } from '@/contexts/NotificationContext';
-import { useDelivery } from '@/contexts/DeliveryContext';
-import AccountLockedModal from './components/AccountLockedModal';
-import KYCMainModal from './components/KYCMainModal';
-import NotificationModal from './components/NotificationModal';
+import { useCreatorTasks } from '@/contexts/CreatorTasksContext';
+import NotificationModal from './modals/NotificationModal';
 import DashboardHeader from './components/DashboardHeader';
 import ProfileSidebar from './components/ProfileSidebar';
 import StatsCards from './components/StatsCards';
-import EmptyDeliveriesState from './components/EmptyDeliveriesState';
-import DeliveriesTable from './components/DeliveriesTable';
+import EmptyTasksState from './components/EmptyTasksState';
+import TasksTable from './components/TasksTable';
+import LockedDashboard from './components/LockedDashboard';
 
-export default function DashboardPage() {
-  const { accountLocked, showKYCModal, isLoading: kycLoading } = useKYC();
+export default function CreatorDashboardPage() {
   const { unreadCount, setShowNotificationModal, showNotificationModal } = useNotifications();
   const { 
-    isLoading: deliveryLoading, 
-    showBrowseView, 
-    setShowBrowseView,
+    isLoading,
     stats,
     userProfile,
-    filteredDeliveries
-  } = useDelivery();
+    filteredTasks
+  } = useCreatorTasks();
+
+  const [isKYCCompleted, setIsKYCCompleted] = useState(false);
+
+  // Check KYC status from localStorage
+  useEffect(() => {
+    const kycStatus = localStorage.getItem('creator_kyc_status');
+    setIsKYCCompleted(kycStatus === 'completed');
+  }, []);
 
   // Show loading state while any critical data is loading
-  if (kycLoading || deliveryLoading) {
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-[#F7F8FA] flex items-center justify-center">
         <div className="text-center">
@@ -36,7 +40,7 @@ export default function DashboardPage() {
     );
   }
 
-  const hasDeliveries = filteredDeliveries.length > 0;
+  const hasTasks = filteredTasks.length > 0;
 
   return (
     <>
@@ -59,20 +63,21 @@ export default function DashboardPage() {
             <div className="lg:col-span-9 xl:col-span-10 space-y-6">
               <StatsCards stats={stats} />
 
-              {/* Conditional Rendering based on browse view */}
-              {!showBrowseView && !hasDeliveries ? (
-                <EmptyDeliveriesState onBrowseClick={() => setShowBrowseView(true)} />
+              {/* Conditional Rendering based on tasks */}
+              {!hasTasks ? (
+                <EmptyTasksState />
               ) : (
-                <DeliveriesTable />
+                <TasksTable />
               )}
             </div>
           </div>
         </div>
       </div>
 
-      {/* Modals - Appear on top of everything */}
-      {accountLocked && !showKYCModal && <AccountLockedModal />}
-      {showKYCModal && <KYCMainModal />}
+      {/* Lock Overlay - Shows on top of dashboard when KYC not completed */}
+      {!isKYCCompleted && <LockedDashboard />}
+
+      {/* Modals */}
       {showNotificationModal && <NotificationModal />}
     </>
   );
