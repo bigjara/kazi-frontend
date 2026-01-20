@@ -1,15 +1,15 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+
+import { useOnboarding } from '@/contexts/OnboardingContext';
 import { CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function AccountSuccess() {
-  const router = useRouter();
+   const { setStep } = useOnboarding();
 
   const handleGetStarted = () => {
-    // Navigate to dashboard or login page
-    router.push('/dashboard'); // or '/login' depending on your flow
+    setStep('role-selection');
   };
 
   return (
@@ -39,13 +39,17 @@ export default function AccountSuccess() {
           Welcome onboard! Start your success journey with KAZI
         </p>
 
+        <p className="text-gray-600 text-lg">
+          Redirecting you to choose your journey...
+        </p>
+
         {/* Get Started Button */}
-        <Link href="/dashboard" 
+        <button 
           onClick={handleGetStarted}
-          className="w-full bg-gray-900 text-white py-3.5 px-6 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200 shadow-sm"
+          className="mt-8 bg-gray-900 text-white py-3.5 px-6 rounded-lg font-medium hover:bg-gray-800 transition-colors duration-200 shadow-sm"
         >
           Get Started
-        </Link>
+        </button>
       </div>
     </div>
   );

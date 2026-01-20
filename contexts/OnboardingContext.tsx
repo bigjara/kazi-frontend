@@ -1,14 +1,15 @@
-// contexts/OnboardingContext.tsx
 'use client';
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-// Define the steps in the onboarding flow
-export type OnboardingStep = 'register' | 'verify-email' | 'verify-code' | 'success';
+// Define the steps in the onboarding flow - role-selection comes AFTER success
+export type OnboardingStep = 'register' | 'verify-email' | 'verify-code' | 'success' | 'role-selection';
+export type RoleType = 'creator' | 'fulfiller' | null;
 
-// Define the context type
 interface OnboardingContextType {
   currentStep: OnboardingStep;
+  selectedRole?: RoleType;
+  setSelectedRole: (role: RoleType) => void;
   email: string;
   userId: string | null;
   setStep: (step: OnboardingStep) => void;
@@ -17,12 +18,11 @@ interface OnboardingContextType {
   resetOnboarding: () => void; 
 }
 
-// Create the context
 const OnboardingContext = createContext<OnboardingContextType | undefined>(undefined);
 
-// Provider component
 export function OnboardingProvider({ children }: { children: ReactNode }) {
   const [currentStep, setCurrentStep] = useState<OnboardingStep>('register');
+  const [selectedRole, setSelectedRole] = useState<RoleType>(null);
   const [email, setEmailState] = useState<string>('');
   const [userId, setUserIdState] = useState<string | null>(null);
 
@@ -42,6 +42,7 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
     setCurrentStep('register');
     setEmailState('');
     setUserIdState(null);
+    setSelectedRole(null);
   };
 
   return (
@@ -50,6 +51,8 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
         currentStep,
         email,
         userId,
+        selectedRole,
+        setSelectedRole,
         setStep,
         setEmail,
         setUserId,
@@ -61,7 +64,6 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
   );
 }
 
-// Custom hook to use the onboarding context
 export function useOnboarding() {
   const context = useContext(OnboardingContext);
   if (context === undefined) {
