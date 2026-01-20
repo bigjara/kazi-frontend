@@ -107,6 +107,7 @@ function generateTask(status: TaskStatus, index: number): Task {
     createdAt,
     completedAt,
     requirements,
+    views: getRandomInt(0, 200),
     skills
   };
 }

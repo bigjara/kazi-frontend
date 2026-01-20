@@ -21,6 +21,7 @@ export interface Task {
   createdAt: Date;
   updatedAt?: Date;
   completedAt?: Date;
+  views: number;
   requirements: string[];
   skills: string[];
 }

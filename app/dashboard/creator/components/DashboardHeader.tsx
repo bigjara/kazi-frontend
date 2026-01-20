@@ -1,4 +1,5 @@
 import { TaskUserProfile } from '@/types/task';
+import { useRouter } from 'next/navigation';
 
 interface DashboardHeaderProps {
   unreadCount: number;
@@ -11,6 +12,12 @@ export default function DashboardHeader({
   onNotificationClick,
   userProfile 
 }: DashboardHeaderProps) {
+
+   const router = useRouter();
+
+  const handleCreateTaskClick = () => {
+    router.push('/dashboard/creator/create-task');
+  };
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-3 text-black">
       <div className="flex items-center justify-between">
@@ -60,7 +67,7 @@ export default function DashboardHeader({
             </svg>
           </button>
           
-          <button className="bg-black text-white px-4 py-1.5 rounded-md hover:bg-gray-800 transition-colors text-xs font-medium flex items-center gap-1.5">
+          <button className="bg-black text-white px-4 py-1.5 rounded-md hover:bg-gray-800 transition-colors text-xs font-medium flex items-center gap-1.5" onClick={handleCreateTaskClick} >
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>
